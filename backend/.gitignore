@@ -1,0 +1,8 @@
+
+node_modules
+.env
+# Database config
+/config/db.js
+
+# Uploads folder
+/uploads/
