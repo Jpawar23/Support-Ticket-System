@@ -42,7 +42,7 @@ export default function TicketList() {
         <div className="px-4 sm:px-6 lg:px-8 min-h-[70vh]  flex flex-col">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-base font-semibold text-gray-900 dark:text-white">Ticket List</h1>
+                    <h1 className="text-base font-semibold">Ticket List</h1>
 
                 </div>
 
@@ -52,34 +52,34 @@ export default function TicketList() {
                     <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
 
 
-                        <table className="relative min-w-full divide-y divide-gray-300 dark:divide-white/15">
+                        <table className="relative min-w-full divide-y ">
                             <thead>
                                 <tr>
                                     <th
                                         scope="col"
-                                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0 dark:text-white"
+                                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0 "
                                     >
                                         Id
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ">
                                         Ticket ID
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ">
                                         Title
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ">
                                         Raised By
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ">
                                         Priority
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ">
                                         Status
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ">
                                         Created At
                                     </th>
-                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-white">
+                                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 ">
                                         Action
                                     </th>
 
@@ -93,19 +93,19 @@ export default function TicketList() {
                                             {(page - 1) * 10 + index + 1}
 
                                         </td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm  ">
                                             {item._id}
                                         </td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm ">
                                             {item.title}
                                         </td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm ">
                                             {item.role}
                                         </td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm  ">
                                             {item.priority}
                                         </td>
-                                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm ">
                                             {item.status}
                                         </td>
 
