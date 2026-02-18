@@ -2,6 +2,7 @@ import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 export default function TicketForm() {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -9,7 +10,6 @@ export default function TicketForm() {
     description: "",
     priority: "",
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -17,7 +17,6 @@ export default function TicketForm() {
       [name]: value,
     }));
   };
-
   const addticket = async (e) => {
     e.preventDefault();
     try {
@@ -25,6 +24,7 @@ export default function TicketForm() {
         "http://localhost:3000/api/addticket",
         data,
       );
+      toast.success("data added succesfully!");
       navigate("/ticket");
       console.log("Contact form submitted:", response.data);
     } catch (error) {
@@ -34,7 +34,6 @@ export default function TicketForm() {
       );
     }
   };
-
   return (
     <form onSubmit={addticket}>
       <div className="space-y-12">

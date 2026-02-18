@@ -1,15 +1,39 @@
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import { useAuth } from "../../utils/AuthContext";
+import axios from "axios";
+import { useAuth } from "../utils/AuthContext";
+import { useState } from "react";
+import { toast } from "react-toastify";
 export default function LoginPage() {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  // const { signIn } = useAuth();
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleLogin = async () => {
-    navigate("/");
+  const navigate = useNavigate();
+  const { signIn } = useAuth();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!data.email || !data.password) {
+      toast.error("All fields are required");
+      return;
+    }
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        data,
+      );
+
+      console.log("Login success:", res.data);
+      // save token
+      localStorage.setItem("token", res.data.token);
+      signIn(res.data);
+      navigate("/");
+    } catch (error) {
+      console.error("error", error.message);
+    }
   };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
       {/* Card */}
@@ -18,12 +42,12 @@ export default function LoginPage() {
           Login
         </h2>
 
-        <form>
+        <form onSubmit={handleLogin}>
           {/* Email field */}
           <div className="mb-4 text-left">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-900 "
+              className="block text-sm font-medium text-gray-900"
             >
               Email
             </label>
@@ -32,8 +56,8 @@ export default function LoginPage() {
                 id="email"
                 name="email"
                 type="email"
-                // value={email}
-                // onChange={(e) => setEmail(e.target.value)}
+                value={data.email}
+                onChange={(e) => setData({ ...data, email: e.target.value })}
                 placeholder="you@example.com"
                 className={` block w-full rounded-md border  bg-white py-2 px-3 pr-10 focus:outline-none focus:ring-2  sm:text-sm`}
               />
@@ -53,8 +77,8 @@ export default function LoginPage() {
                 id="password"
                 name="password"
                 type="password"
-                // value={password}
-                // onChange={(e) => setPassword(e.target.value)}
+                value={data.password}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
                 placeholder="Enter your password"
                 className={`block w-full rounded-md border  bg-white py-2 px-3 pr-10 focus:outline-none focus:ring-2  sm:text-sm`}
               />
@@ -64,7 +88,6 @@ export default function LoginPage() {
           {/* Sign in button */}
           <button
             type="submit"
-            onClick={handleLogin}
             className="w-full rounded-md bg-indigo-600 py-2 px-4 text-white font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             Sign In

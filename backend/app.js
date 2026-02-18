@@ -1,13 +1,14 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const cors = require("cors");
-// const createticket = require('./routes/ticket.routes');
-// const getticket = require('./routes/ticket.routes')
-const ticketroutes = require("./routes/ticket.routes")
+require("dotenv").config();
+
+const ticketroutes = require("./routes/ticket.routes");
+const userroutes = require("./routes/user.routes");
 app.use(express.json());
 app.use(cors());
 
-app.use("/api", ticketroutes)
-// app.use("/", createticket);
-// app.use("/", getticket);
+app.use("/api", ticketroutes);
+app.use("/api/auth", userroutes);
+
 module.exports = app;

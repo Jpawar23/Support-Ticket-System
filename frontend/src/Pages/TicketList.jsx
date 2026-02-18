@@ -22,16 +22,6 @@ export default function TicketList() {
     }
   };
 
-  const getDataById = async (id) => {
-    try {
-      const res = await axios.get(`http://localhost:3000/api/${id}`);
-      setGetTicket(res.data.data);
-      console.log(res.data);
-    } catch (error) {
-      console.error("error", error.message);
-    }
-  };
-
   const deletedata = async (id) => {
     try {
       const res = await axios.delete(`http://localhost:3000/api/${id}`);
@@ -72,16 +62,11 @@ export default function TicketList() {
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 "
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
                     Title
                   </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 "
-                  >
-                    Raised By
-                  </th>
+
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 "
@@ -102,7 +87,7 @@ export default function TicketList() {
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 "
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
                     Action
                   </th>
@@ -115,15 +100,13 @@ export default function TicketList() {
                       {/* {index + 1} */}
                       {(page - 1) * 10 + index + 1}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm  ">
-                      {item._id}
+                    <td className="whitespace-nowrap px-3 py-4 text-sm ">
+                      {item._id.slice(0, 7)}...
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm max-w-[80px] truncate">
                       {item.title}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm ">
-                      {item.role}
-                    </td>
+
                     <td className="whitespace-nowrap px-3 py-4 text-sm  ">
                       {item.priority}
                     </td>
