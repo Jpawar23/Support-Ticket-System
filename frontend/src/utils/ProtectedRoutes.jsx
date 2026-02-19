@@ -1,13 +1,21 @@
-
 // ProtectedRoutes.js
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "./AuthContext"; // Import the useAuth hook
+import { useAuth } from "./AuthContext";
 
-const ProtectedRoutes = () => {
-  const { user } = useAuth(); // Get the current user/auth status
+const ProtectedRoutes = ({ allowedRoles }) => {
+  const { user } = useAuth();
 
-  // If the user is authenticated, render the child routes; otherwise, redirect to login
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
+  // Not logged in
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Role check
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoutes;

@@ -16,7 +16,9 @@ const createticket = async (req, res) => {
       description,
       priority: priority || "Medium",
       status: status || "open",
+      createdBy: req.user._id,
     });
+
     return res.status(201).json({
       success: true,
       message: "Ticket created successfully!",
@@ -41,10 +43,10 @@ const getticket = async (req, res) => {
 
     const files = await data
       .find()
+      .populate("createdBy", "name email")
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit)
-      .sort({ createAt: -1 });
+      .limit(limit);
 
     res.status(200).json({
       success: true,
@@ -64,7 +66,12 @@ const getticket = async (req, res) => {
 
 const getticketid = async (req, res) => {
   try {
-    const filedata = await data.findById(req.params.id);
+    // const filedata = await data.findById(req.params.id);
+
+    const filedata = await data
+      .findById(req.params.id)
+      .populate("createdBy", "name email role");
+
     if (!filedata) {
       return res.json({
         success: false,

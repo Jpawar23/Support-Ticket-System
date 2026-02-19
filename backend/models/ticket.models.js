@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const ticketSchma = new mongoose.Schema(
   {
     title: {
@@ -13,12 +12,17 @@ const ticketSchma = new mongoose.Schema(
     priority: {
       type: String,
       enum: ["Low", "Medium", "High"],
-      default: "medium",
+      default: "Medium",
     },
     status: {
       type: String,
       enum: ["open", "in-progress", "resolved"],
       default: "open",
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
   },
   { timestamps: true },

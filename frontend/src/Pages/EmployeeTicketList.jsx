@@ -12,7 +12,7 @@ export default function EmployeeTicketList() {
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-base font-semibold text-gray-900 dark:text-white">Ticket List</h1>
+                    <h1 className="text-base font-semibold text-gray-900 dark:text-white">Employee Ticket List</h1>
                     {/* <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
                         A list of all the users in your account including their name, title, email and role.
                     </p> */}

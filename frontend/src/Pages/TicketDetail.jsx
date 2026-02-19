@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import api from "../utils/axiosInstance";
 const TicketDetail = () => {
   const { id } = useParams();
   const [data, setData] = useState();
-
+  const token = localStorage.getItem("token");
   const getdatabyid = async (id) => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/${id}`);
+      const res = await api.get(`/${id}`);
       setData(res.data.data);
       console.log("Response", res.data.data);
     } catch (error) {
@@ -48,7 +49,9 @@ const TicketDetail = () => {
 
         <div className="grid grid-cols-3 py-4">
           <h5 className="text-base font-medium text-gray-500">Raised by</h5>
-          <p className="col-span-2 text-sm text-gray-900"></p>
+          <p className="col-span-2 text-sm text-gray-900">
+            {data.createdBy?.name}
+          </p>
         </div>
 
         <div className="grid grid-cols-3 py-4">

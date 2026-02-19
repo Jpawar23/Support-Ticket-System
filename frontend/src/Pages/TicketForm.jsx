@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import api from "../utils/axiosInstance";
 export default function TicketForm() {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -20,10 +21,7 @@ export default function TicketForm() {
   const addticket = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/addticket",
-        data,
-      );
+      const response = await api.post("/addticket", data);
       toast.success("data added succesfully!");
       navigate("/ticket");
       console.log("Contact form submitted:", response.data);

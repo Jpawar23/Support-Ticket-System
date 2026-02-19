@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from "../utils/AuthContext";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import api from "../utils/axiosInstance";
 export default function LoginPage() {
   const [data, setData] = useState({
     email: "",
@@ -19,16 +20,17 @@ export default function LoginPage() {
       return;
     }
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        data,
-      );
-
+      const res = await api.post("/auth/login", data);
       console.log("Login success:", res.data);
       // save token
       localStorage.setItem("token", res.data.token);
       signIn(res.data);
-      navigate("/");
+      // navigate("/");
+      if (res.data.user.role === "admin") {
+        navigate("/");
+      } else {
+        navigate("/employee-dashboard");
+      }
     } catch (error) {
       console.error("error", error.message);
     }

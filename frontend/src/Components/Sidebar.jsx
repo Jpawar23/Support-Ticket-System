@@ -4,23 +4,39 @@ import {
   UsersIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
+
 import { NavLink, useNavigate } from "react-router-dom";
+
 import { useAuth } from "../utils/AuthContext";
+
 const navigation = [
-  { name: "Dashboard", to: "/", icon: HomeIcon, current: true, role: "admin" },
+  {
+    name: "Dashboard",
+    to: "/",
+    icon: HomeIcon,
+    current: true,
+    role: ["admin"],
+  },
   {
     name: "Tickets",
     to: "/ticket",
     icon: UsersIcon,
     current: false,
-    role: "admin",
+    role: ["admin"],
   },
-
+  {
+    name: "Dashboard",
+    to: "/employee-dashboard",
+    icon: HomeIcon,
+    current: true,
+    role: ["user"],
+  },
   {
     name: "Create Ticket",
     to: "/create-ticket",
     icon: FolderIcon,
     current: false,
+    role: ["admin", "user"],
   },
 ];
 
@@ -29,12 +45,17 @@ function classNames(...classes) {
 }
 
 export default function Sidebar() {
+  const { user } = useAuth();
   const { signOut } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
     signOut();
     navigate("/login");
   };
+
+  const filteredNavigation = navigation.filter(
+    (item) => !item.role || item.role.includes(user?.role),
+  );
   return (
     <div className="flex min-h-screen flex-col border-r border-gray-200 bg-white px-6">
       {/* Logo */}
@@ -50,7 +71,7 @@ export default function Sidebar() {
 
       <nav className="flex flex-1 flex-col">
         <ul role="list" className="-mx-2 space-y-1">
-          {navigation.map((item) => (
+          {filteredNavigation.map((item) => (
             <li key={item.name}>
               <NavLink
                 to={item.to}
