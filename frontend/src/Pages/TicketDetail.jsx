@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import api from "../utils/axiosInstance";
 const TicketDetail = () => {
   const { id } = useParams();
@@ -21,6 +20,7 @@ const TicketDetail = () => {
       getdatabyid(id);
     }
   }, [id]);
+
   if (!data) return <p>Loading...</p>;
 
   return (
@@ -31,6 +31,7 @@ const TicketDetail = () => {
       <p className="mt-1 text-sm/6 text-gray-600">
         Here you can view the details of a specific ticket.
       </p>
+
       <div className="mt-10 divide-y">
         <div className="grid grid-cols-3 py-4">
           <h5 className="text-base font-medium text-gray-500">Ticket ID</h5>

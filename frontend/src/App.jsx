@@ -41,18 +41,18 @@ function App() {
 
             {/* User Routes */}
             <Route element={<ProtectedRoutes allowedRoles={["user"]} />}>
-              <Route
+              {/* <Route
                 path="/employee-dashboard"
                 element={<EmployeeDashboard />}
-              ></Route>
+              ></Route> */}
               <Route
-                path="/employee-ticket"
+                path="/user-ticket"
                 element={<EmployeeTicketList />}
               ></Route>
+              <Route path="/create-ticket" element={<TicketForm />}></Route>
             </Route>
 
             {/* other Routes */}
-            <Route path="/create-ticket" element={<TicketForm />}></Route>
           </Route>
         </Route>
       </Routes>

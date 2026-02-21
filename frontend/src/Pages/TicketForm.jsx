@@ -1,6 +1,5 @@
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../utils/axiosInstance";
@@ -23,7 +22,7 @@ export default function TicketForm() {
     try {
       const response = await api.post("/addticket", data);
       toast.success("data added succesfully!");
-      navigate("/ticket");
+      navigate("/user-ticket");
       console.log("Contact form submitted:", response.data);
     } catch (error) {
       console.error(

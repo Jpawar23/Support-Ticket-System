@@ -64,33 +64,60 @@ const getticket = async (req, res) => {
   }
 };
 
+// const getticketid = async (req, res) => {
+//   try {
+//     // const filedata = await data.findById(req.params.id);
+
+//     const filedata = await data
+//       .findById(req.params.id)
+//       // .find({ createdBy: req.params.id })
+//       .populate("createdBy", "name email role");
+
+//     if (!filedata) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "data not found",
+//       });
+//     }
+//     res.status(200).json({
+//       success: true,
+//       message: "data found succesfully!",
+//       data: filedata,
+//     });
+//   } catch (error) {
+//     res.json({
+//       success: false,
+//       message: "err.message",
+//     });
+//   }
+// };
+
 const getticketid = async (req, res) => {
   try {
-    // const filedata = await data.findById(req.params.id);
-
     const filedata = await data
-      .findById(req.params.id)
+      // .find({ createdBy: req.params.id })
+      .find({ createdBy: req.user.id })
       .populate("createdBy", "name email role");
 
-    if (!filedata) {
-      return res.json({
+    if (!filedata || filedata.length === 0) {
+      return res.status(400).json({
         success: false,
-        message: "data not found",
+        message: "No tickets found",
       });
     }
-    res.json({
+
+    res.status(200).json({
       success: true,
-      message: "data found succesfully!",
+      message: "Tickets found successfully!",
       data: filedata,
     });
   } catch (error) {
-    res.json({
+    res.status(500).json({
       success: false,
-      message: "err.message",
+      message: error.message,
     });
   }
 };
-
 const deleteticket = async (req, res) => {
   try {
     const file = await data.findById(req.params.id);

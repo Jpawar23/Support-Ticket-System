@@ -4,11 +4,8 @@ import {
   UsersIcon,
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-
 import { NavLink, useNavigate } from "react-router-dom";
-
 import { useAuth } from "../utils/AuthContext";
-
 const navigation = [
   {
     name: "Dashboard",
@@ -17,18 +14,19 @@ const navigation = [
     current: true,
     role: ["admin"],
   },
+  // {
+  //   name: "Dashboard",
+  //   to: "/employee-dashboard",
+  //   icon: HomeIcon,
+  //   current: true,
+  //   role: ["user"],
+  // },
   {
-    name: "Tickets",
-    to: "/ticket",
+    name: "My Tickets",
+    to: "/user-ticket",
+    // to: `/employee-ticket/${user._id}`,
     icon: UsersIcon,
     current: false,
-    role: ["admin"],
-  },
-  {
-    name: "Dashboard",
-    to: "/employee-dashboard",
-    icon: HomeIcon,
-    current: true,
     role: ["user"],
   },
   {
@@ -36,7 +34,14 @@ const navigation = [
     to: "/create-ticket",
     icon: FolderIcon,
     current: false,
-    role: ["admin", "user"],
+    role: ["user"],
+  },
+  {
+    name: "Tickets",
+    to: "/ticket",
+    icon: UsersIcon,
+    current: false,
+    role: ["admin"],
   },
 ];
 
@@ -60,11 +65,11 @@ export default function Sidebar() {
     <div className="flex min-h-screen flex-col border-r border-gray-200 bg-white px-6">
       {/* Logo */}
       <div className="flex h-16 items-center w-48">
-        {/* <img
-                    alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    className="h-8 w-auto"
-                /> */}
+        <img
+          alt="Your Company"
+          src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+          className="h-8 w-auto"
+        />
       </div>
 
       {/* Navigation */}

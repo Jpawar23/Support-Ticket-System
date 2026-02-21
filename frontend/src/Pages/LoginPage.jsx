@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useAuth } from "../utils/AuthContext";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -9,10 +8,8 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
-
   const navigate = useNavigate();
   const { signIn } = useAuth();
-
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!data.email || !data.password) {
@@ -29,7 +26,8 @@ export default function LoginPage() {
       if (res.data.user.role === "admin") {
         navigate("/");
       } else {
-        navigate("/employee-dashboard");
+        // navigate("/employee-dashboard");
+        navigate("/user-ticket");
       }
     } catch (error) {
       console.error("error", error.message);
