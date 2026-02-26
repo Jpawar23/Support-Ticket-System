@@ -116,52 +116,10 @@ export default function TicketList() {
                     <td className="whitespace-nowrap px-3 py-4 text-sm">
                       {item.priority}
                     </td>
-                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm">
+                    <td className="whitespace-nowrap px-3 py-4 text-sm">
                       {item.status}
-                    </td> */}
-                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm">
-                      <select
-                        value={item.status}
-                        onChange={(e) =>
-                          handleStatusChange(item._id, e.target.value)
-                        }
-                        className="border rounded px-2 py-1"
-                      >
-                        <option value="Open">Open</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Resolved">Resolved</option>
-                        <option value="Closed">Closed</option>
-                      </select>
-                    </td> */}
-                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm flex gap-2">
-                      {["Open", "In Progress", "Resolved", "Closed"].map(
-                        (status) => (
-                          <button
-                            key={status}
-                            onClick={() => handleStatusChange(item._id, status)}
-                            className={`px-2 py-1 rounded text-xs font-medium ${
-                              item.status === status
-                                ? "bg-indigo-600 text-white"
-                                : "bg-gray-200 text-gray-700 hover:bg-indigo-100"
-                            }`}
-                          >
-                            {status}
-                          </button>
-                        ),
-                      )}
-                    </td> */}
-                    <td className="px-3 py-4 text-sm flex items-center gap-2">
-                      <span className="px-2 py-1 rounded bg-gray-200 text-xs">
-                        {item.status}
-                      </span>
-
-                      <button
-                        onClick={() => openStatusModal(item)}
-                        className="text-indigo-600 text-xs"
-                      >
-                        Edit
-                      </button>
                     </td>
+
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 font-medium">
                       {new Date(item.createdAt).toLocaleDateString("en-IN")}
                     </td>
