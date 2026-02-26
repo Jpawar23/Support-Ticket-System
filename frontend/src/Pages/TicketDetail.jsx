@@ -5,16 +5,35 @@ const TicketDetail = () => {
   const { id } = useParams();
   const [data, setData] = useState();
   const token = localStorage.getItem("token");
+  // const getdatabyid = async (id) => {
+  //   try {
+  //     const res = await api.get(`/${id}`);
+  //     setData(res.data.data);
+  //     // const ticketArray = res.data.data;
+  //     // setData(ticketArray.find((item) => item._id === id));
+  //     console.log("Response", res.data.data);
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // };
   const getdatabyid = async (id) => {
     try {
-      const res = await api.get(`/${id}`);
-      setData(res.data.data);
-      console.log("Response", res.data.data);
+      const res = await api.get(`/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.data.success) {
+        setData(res.data.data);
+      } else {
+        console.log(res.data.message);
+      }
     } catch (error) {
-      console.error(error.message);
+      console.error(error.response?.data || error.message);
     }
   };
-
+  console.log("ID from params:", id);
   useEffect(() => {
     if (id) {
       getdatabyid(id);

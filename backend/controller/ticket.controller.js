@@ -64,38 +64,10 @@ const getticket = async (req, res) => {
   }
 };
 
-// const getticketid = async (req, res) => {
-//   try {
-//     // const filedata = await data.findById(req.params.id);
-
-//     const filedata = await data
-//       .findById(req.params.id)
-//       // .find({ createdBy: req.params.id })
-//       .populate("createdBy", "name email role");
-
-//     if (!filedata) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "data not found",
-//       });
-//     }
-//     res.status(200).json({
-//       success: true,
-//       message: "data found succesfully!",
-//       data: filedata,
-//     });
-//   } catch (error) {
-//     res.json({
-//       success: false,
-//       message: "err.message",
-//     });
-//   }
-// };
-
-const getticketid = async (req, res) => {
+const getTicketsByUser = async (req, res) => {
   try {
     const filedata = await data
-      // .find({ createdBy: req.params.id })
+      // .findBy(req.params.id)
       .find({ createdBy: req.user.id })
       .populate("createdBy", "name email role");
 
@@ -118,6 +90,53 @@ const getticketid = async (req, res) => {
     });
   }
 };
+
+const getMyTickets = async (req, res) => {
+  try {
+    const tickets = await data
+      .find({ createdBy: req.user.id }) // 👈 Logged in user
+      .populate("createdBy", "name email role");
+
+    res.status(200).json({
+      success: true,
+      data: tickets,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+const getticketid = async (req, res) => {
+  try {
+    const filedata = await data
+      .findById(req.params.id)
+      // .find({ createdBy: req.params.id })
+      // .find({ createdBy: req.user.id })
+      .populate("createdBy", "name email role");
+
+    if (!filedata || filedata.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No tickets found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Tickets found successfully!",
+      data: filedata,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const deleteticket = async (req, res) => {
   try {
     const file = await data.findById(req.params.id);
@@ -141,4 +160,39 @@ const deleteticket = async (req, res) => {
   }
 };
 
-module.exports = { createticket, getticket, getticketid, deleteticket };
+const getdashboardstatus = async (req, res) => {
+  try {
+    // TOtal ticket
+    const totalticket = await data.countDocuments();
+    const openTickets = await data.countDocuments({ status: "open" });
+    const inProgressTickets = await data.countDocuments({
+      status: "in-progress",
+    });
+    const resolvedTickets = await data.countDocuments({
+      status: "resolved",
+    });
+    res.json({
+      success: true,
+      data: {
+        totalticket,
+        openTickets,
+        resolvedTickets,
+        inProgressTickets,
+      },
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+module.exports = {
+  createticket,
+  getticket,
+  getticketid,
+  deleteticket,
+  getdashboardstatus,
+  getTicketsByUser,
+  getMyTickets,
+};

@@ -36,15 +36,11 @@ function App() {
             <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
               <Route path="/" element={<Dashboard />}></Route>
               <Route path="/ticket" element={<TicketList />}></Route>
-              <Route path="/ticket/:id" element={<TicketDetail />}></Route>
+              {/* <Route path="/ticket/:id" element={<TicketDetail />}></Route> */}
             </Route>
 
             {/* User Routes */}
             <Route element={<ProtectedRoutes allowedRoles={["user"]} />}>
-              {/* <Route
-                path="/employee-dashboard"
-                element={<EmployeeDashboard />}
-              ></Route> */}
               <Route
                 path="/user-ticket"
                 element={<EmployeeTicketList />}
@@ -53,6 +49,7 @@ function App() {
             </Route>
 
             {/* other Routes */}
+            <Route path="/ticket/:id" element={<TicketDetail />}></Route>
           </Route>
         </Route>
       </Routes>

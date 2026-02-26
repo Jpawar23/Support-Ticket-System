@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
+import { useEffect, useState } from "react";
 const navigation = [
   {
     name: "Dashboard",
@@ -53,6 +54,15 @@ export default function Sidebar() {
   const { user } = useAuth();
   const { signOut } = useAuth();
   const navigate = useNavigate();
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const savedName = localStorage.getItem("name");
+    if (savedName) {
+      setName(savedName);
+    }
+  }, []);
+
   const handleLogout = () => {
     signOut();
     navigate("/login");
@@ -115,7 +125,9 @@ export default function Sidebar() {
               className="size-8 rounded-full bg-gray-50"
             />
             <div className="text-sm">
-              <p className="font-semibold text-gray-900">Tom Cook</p>
+              <p className="font-semibold text-gray-900">
+                {user?.name || "User"}
+              </p>
             </div>
           </div>
         </div>

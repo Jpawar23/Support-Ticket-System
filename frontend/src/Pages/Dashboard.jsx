@@ -1,44 +1,49 @@
-import React, { useState } from 'react'
-import DashboardCard from '../Components/DashboardCard';
+import React, { useEffect, useState } from "react";
+import DashboardCard from "../Components/DashboardCard";
+import api from "../utils/axiosInstance";
 const Dashboard = () => {
-    const [dashboardData, setDashboardData] = useState({
-        totalFiles: 0,
-        OpenTickets: 0,
-        InProgressTickets: 0,
-        ResolvedTickets: 0
-    });
+  const [dashboardData, setDashboardData] = useState({
+    totalFiles: 0,
+    OpenTickets: 0,
+    InProgressTickets: 0,
+    ResolvedTickets: 0,
+  });
 
+  const getdashboardapi = async () => {
+    try {
+      const res = await api.get("/dashboard");
+      if (res.data.success) {
+        setDashboardData({
+          totalFiles: res.data.data.totalticket,
+          OpenTickets: res.data.data.openTickets,
+          InProgressTickets: res.data.data.inProgressTickets,
+          ResolvedTickets: res.data.data.resolvedTickets,
+        });
+      }
+    } catch (error) {
+      console.error("error", error.message);
+    }
+  };
 
+  useEffect(() => {
+    getdashboardapi();
+  }, []);
 
-    return (
-        <div className="px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  return (
+    <div className="px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <DashboardCard title="Total Files" value={dashboardData.totalFiles} />
 
-            <DashboardCard
-                title="Total Files"
-                value={dashboardData.totalFiles}
-            />
-
-            <DashboardCard
-                title="Open Tickets"
-                value={dashboardData.OpenTickets}
-            />
-            <DashboardCard
-                title="In Progress Tickets"
-                value={dashboardData.InProgressTickets}
-            />
-            <DashboardCard
-                title="Resolved Tickets"
-                value={dashboardData.ResolvedTickets}
-            />
-
-
-        </div>
-    )
-}
+      <DashboardCard title="Open Tickets" value={dashboardData.OpenTickets} />
+      <DashboardCard
+        title="In Progress Tickets"
+        value={dashboardData.InProgressTickets}
+      />
+      <DashboardCard
+        title="Resolved Tickets"
+        value={dashboardData.ResolvedTickets}
+      />
+    </div>
+  );
+};
 
 export default Dashboard;
-
-
-
-
-

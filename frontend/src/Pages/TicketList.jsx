@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Pagination from "../Components/Pagination";
 import { Link } from "react-router-dom";
 import api from "../utils/axiosInstance";
@@ -24,7 +23,7 @@ export default function TicketList() {
 
   const deletedata = async (id) => {
     try {
-      const res = await api.delete(`http://localhost:3000/api/${id}`);
+      const res = await api.delete(`/${id}`);
       setGetTicket((prev) => prev.filter((item) => item._id !== id));
     } catch (err) {
       console.error("error", err.message);
@@ -66,7 +65,12 @@ export default function TicketList() {
                   >
                     Title
                   </th>
-
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Raised by
+                  </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 "
@@ -95,7 +99,7 @@ export default function TicketList() {
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-white/10">
                 {getTicket.map((item, index) => (
-                  <tr key={item}>
+                  <tr key={item._id}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0 ">
                       {/* {index + 1} */}
                       {(page - 1) * 10 + index + 1}
@@ -106,17 +110,58 @@ export default function TicketList() {
                     <td className="whitespace-nowrap px-3 py-4 text-sm max-w-[80px] truncate">
                       {item.title}
                     </td>
-
-                    <td className="whitespace-nowrap px-3 py-4 text-sm  ">
+                    <td className="whitespace-nowrap px-3 py-4 text-sm max-w-[80px] truncate">
+                      {item.createdBy?.name}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm">
                       {item.priority}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm ">
+                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm">
                       {item.status}
-                    </td>
+                    </td> */}
+                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm">
+                      <select
+                        value={item.status}
+                        onChange={(e) =>
+                          handleStatusChange(item._id, e.target.value)
+                        }
+                        className="border rounded px-2 py-1"
+                      >
+                        <option value="Open">Open</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Closed">Closed</option>
+                      </select>
+                    </td> */}
+                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm flex gap-2">
+                      {["Open", "In Progress", "Resolved", "Closed"].map(
+                        (status) => (
+                          <button
+                            key={status}
+                            onClick={() => handleStatusChange(item._id, status)}
+                            className={`px-2 py-1 rounded text-xs font-medium ${
+                              item.status === status
+                                ? "bg-indigo-600 text-white"
+                                : "bg-gray-200 text-gray-700 hover:bg-indigo-100"
+                            }`}
+                          >
+                            {status}
+                          </button>
+                        ),
+                      )}
+                    </td> */}
+                    <td className="px-3 py-4 text-sm flex items-center gap-2">
+                      <span className="px-2 py-1 rounded bg-gray-200 text-xs">
+                        {item.status}
+                      </span>
 
-                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                                            {item.createdAt}
-                                        </td> */}
+                      <button
+                        onClick={() => openStatusModal(item)}
+                        className="text-indigo-600 text-xs"
+                      >
+                        Edit
+                      </button>
+                    </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 font-medium">
                       {new Date(item.createdAt).toLocaleDateString("en-IN")}
                     </td>
@@ -126,7 +171,7 @@ export default function TicketList() {
                         to={`/ticket/${item._id}`}
                         className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
                       >
-                        View<span className="sr-only">, {item.name}</span>
+                        View<span className="sr-only">, {item._id}</span>
                       </Link>
                       <Link
                         to="#"

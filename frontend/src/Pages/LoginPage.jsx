@@ -21,6 +21,7 @@ export default function LoginPage() {
       console.log("Login success:", res.data);
       // save token
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("name", res.data.name);
       signIn(res.data);
       // navigate("/");
       if (res.data.user.role === "admin") {
