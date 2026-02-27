@@ -18,6 +18,7 @@ export default function EmployeeTicketList() {
   useEffect(() => {
     getemployeedatabyid(id);
   }, [id]);
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">

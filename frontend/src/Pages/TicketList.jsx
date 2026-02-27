@@ -7,6 +7,7 @@ export default function TicketList() {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalpages, setTotalPages] = useState(1);
+  const [editingId, setEditingId] = useState(null);
   const token = localStorage.getItem("token");
   const getData = async () => {
     try {
@@ -33,6 +34,24 @@ export default function TicketList() {
   useEffect(() => {
     getData();
   }, [page]);
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await api.put(`/status/${id}`, {
+        status: newStatus,
+      });
+
+      setGetTicket((prev) =>
+        prev.map((item) =>
+          item._id === id ? { ...item, status: newStatus } : item,
+        ),
+      );
+
+      setEditingId(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 min-h-[70vh]  flex flex-col">
@@ -73,19 +92,19 @@ export default function TicketList() {
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 "
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
                     Priority
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 "
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
                     Status
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 "
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
                     Created At
                   </th>
@@ -116,10 +135,38 @@ export default function TicketList() {
                     <td className="whitespace-nowrap px-3 py-4 text-sm">
                       {item.priority}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm">
+                    {/* <td className="whitespace-nowrap px-3 py-4 text-sm">
                       {item.status}
+                    </td> */}
+                    <td className="whitespace-nowrap px-3 py-4 text-sm">
+                      {editingId === item._id ? (
+                        <select
+                          value={item.status}
+                          onChange={(e) =>
+                            handleStatusChange(item._id, e.target.value)
+                          }
+                          className="border border-indigo-500 rounded px-2 py-1 bg-indigo-50"
+                        >
+                          <option value="open">Open</option>
+                          <option value="in-progress">In Progress</option>
+                          <option value="resolved">Resolved</option>
+                        </select>
+                      ) : (
+                        <span
+                          className={`px-2 py-1 rounded text-sm font-medium ${
+                            item.status === "open"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : item.status === "in-progress"
+                                ? "bg-blue-100 text-blue-700"
+                                : item.status === "resolved"
+                                  ? "bg-green-100 text-green-700"
+                                  : "bg-gray-200 text-gray-900"
+                          }`}
+                        >
+                          {item.status}
+                        </span>
+                      )}
                     </td>
-
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900 font-medium">
                       {new Date(item.createdAt).toLocaleDateString("en-IN")}
                     </td>
@@ -131,13 +178,19 @@ export default function TicketList() {
                       >
                         View<span className="sr-only">, {item._id}</span>
                       </Link>
-                      <Link
+                      {/* <Link
                         to="#"
                         className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
                       >
                         Update Status
                         <span className="sr-only">, {item.name}</span>
-                      </Link>
+                      </Link> */}
+                      <button
+                        onClick={() => setEditingId(item._id)}
+                        className="text-indigo-600 hover:text-indigo-900"
+                      >
+                        Update Status
+                      </button>
                       <button
                         onClick={() => deletedata(item._id)}
                         className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"

@@ -187,6 +187,35 @@ const getdashboardstatus = async (req, res) => {
     });
   }
 };
+
+const updateTicketStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const updatedTicket = await data.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true },
+    );
+
+    if (!updatedTicket) {
+      return res.status(404).json({
+        success: false,
+        message: "Ticket not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: updatedTicket,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 module.exports = {
   createticket,
   getticket,
@@ -195,4 +224,5 @@ module.exports = {
   getdashboardstatus,
   getTicketsByUser,
   getMyTickets,
+  updateTicketStatus,
 };

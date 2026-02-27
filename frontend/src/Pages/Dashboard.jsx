@@ -4,9 +4,9 @@ import api from "../utils/axiosInstance";
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({
     totalFiles: 0,
-    OpenTickets: 0,
-    InProgressTickets: 0,
-    ResolvedTickets: 0,
+    openTickets: 0,
+    inProgressTickets: 0,
+    resolvedTickets: 0,
   });
 
   const getdashboardapi = async () => {
@@ -15,9 +15,9 @@ const Dashboard = () => {
       if (res.data.success) {
         setDashboardData({
           totalFiles: res.data.data.totalticket,
-          OpenTickets: res.data.data.openTickets,
-          InProgressTickets: res.data.data.inProgressTickets,
-          ResolvedTickets: res.data.data.resolvedTickets,
+          openTickets: res.data.data.openTickets,
+          inProgressTickets: res.data.data.inProgressTickets,
+          resolvedTickets: res.data.data.resolvedTickets,
         });
       }
     } catch (error) {
@@ -33,14 +33,14 @@ const Dashboard = () => {
     <div className="px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <DashboardCard title="Total Files" value={dashboardData.totalFiles} />
 
-      <DashboardCard title="Open Tickets" value={dashboardData.OpenTickets} />
+      <DashboardCard title="Open Tickets" value={dashboardData.openTickets} />
       <DashboardCard
         title="In Progress Tickets"
-        value={dashboardData.InProgressTickets}
+        value={dashboardData.inProgressTickets}
       />
       <DashboardCard
         title="Resolved Tickets"
-        value={dashboardData.ResolvedTickets}
+        value={dashboardData.resolvedTickets}
       />
     </div>
   );

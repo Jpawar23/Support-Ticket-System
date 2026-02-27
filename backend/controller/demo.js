@@ -1,5 +1,4 @@
 const Ticket = require("../models/ticket.model");
-
 const getDashboardStats = async (req, res) => {
   try {
     const totalTickets = await Ticket.countDocuments();
@@ -9,11 +8,9 @@ const getDashboardStats = async (req, res) => {
     const inProgressTickets = await Ticket.countDocuments({
       status: "in-progress",
     });
-
     const resolvedTickets = await Ticket.countDocuments({
       status: "resolved",
     });
-
     res.status(200).json({
       success: true,
       data: {
@@ -30,5 +27,4 @@ const getDashboardStats = async (req, res) => {
     });
   }
 };
-
 module.exports = { getDashboardStats };

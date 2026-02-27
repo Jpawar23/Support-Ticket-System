@@ -7,6 +7,7 @@ const {
   deleteticket,
   getdashboardstatus,
   getTicketsByUser,
+  updateTicketStatus,
 } = require("../controller/ticket.controller");
 
 const authMiddleware = require("../middleware/auth");
@@ -24,7 +25,11 @@ router.get("/allfiles", authMiddleware, getticket);
 //get ticket by user
 router.get("/user", authMiddleware, getTicketsByUser);
 
+//get usertickets
 router.get("/mytickets", authMiddleware, getMyTickets);
+
+//status update
+router.put("/status/:id", authMiddleware, updateTicketStatus);
 
 // get ticket by id
 router.get("/:id", authMiddleware, getticketid);

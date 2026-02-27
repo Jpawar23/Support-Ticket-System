@@ -15,17 +15,10 @@ const navigation = [
     current: true,
     role: ["admin"],
   },
-  // {
-  //   name: "Dashboard",
-  //   to: "/employee-dashboard",
-  //   icon: HomeIcon,
-  //   current: true,
-  //   role: ["user"],
-  // },
+
   {
     name: "My Tickets",
     to: "/user-ticket",
-    // to: `/employee-ticket/${user._id}`,
     icon: UsersIcon,
     current: false,
     role: ["user"],
